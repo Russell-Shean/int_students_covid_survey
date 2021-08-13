@@ -39,7 +39,9 @@ source("survey_round_merger.R")
 source("variable_merger.R")
 
 
+## this step writes the data.frame to a csv file
 
+write.csv(int_students_total, file = "int_students_total.csv")
 
 
 
