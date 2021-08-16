@@ -20,6 +20,11 @@ int_students_total <- data.frame(apply(int_students_total, 2,tolower))
 require(stringr)
 int_students_total <- data.frame(apply(int_students_total, 2,str_squish))
 
+#these steps are important because R treats capital letters and lower case letters as different characters and also treats white space as a character (of sorts) 
+
+# Therefore, for R, "Tmu", "TMu" "tMU", "TMU", "tmu ", " tmU" are all different, so forcing everything to lower case and removing white space helps us turn all of these things into "tmu" and automatically combine these different posibilities
+#this is important when users are allowed to input their own data
+
 ####################################################################################
 ### fix numbers 
 #####################################################################################
@@ -29,7 +34,7 @@ int_students_total <- data.frame(apply(int_students_total, 2,str_squish))
 int_students_total[,c("survey_time_secs","age","months_in_taiwan")] <- data.frame(apply(int_students_total[,c("survey_time_secs","age","months_in_taiwan")], 2,as.numeric))
 
 
-#in case we want to look at response date sometime later, let's convert survey_time to a date-time format
+#in case we want to look at response date sometime later,let's convert survey_time to a date-time format
 require(lubridate)
 int_students_total$survey_time <- ymd_hms(int_students_total$survey_time)
 
@@ -40,24 +45,37 @@ int_students_total$survey_time <- ymd_hms(int_students_total$survey_time)
 # 1. university
 
 # Taipei Medical University fixes
-int_students_total[int_students_total$university=="taipeimedicaluniversity",]$university <- "taipei medical university"
-int_students_total[int_students_total$university=="tmu",]$university <- "taipei medical university"
-int_students_total[int_students_total$university=="taipei medical universty",]$university <- "taipei medical university"
-int_students_total[int_students_total$university=="taipei medical universitu",]$university <- "taipei medical university"
-int_students_total[int_students_total$university=="taipei medial university",]$university <- "taipei medical university"
-int_students_total[int_students_total$university=="taipei medical univeristy",]$university <- "taipei medical university"
-int_students_total[int_students_total$university=="tmu taipei",]$university <- "taipei medical university"
-int_students_total[int_students_total$university=="tmu taiwan",]$university <- "taipei medical university"
-int_students_total[int_students_total$university=="tmu college of oral medicine, school of dentistry",]$university <- "taipei medical university"
 
-## This is an absolutely terrible terrible terrible way to get around encoding issues I'm having
-## the real solution is to take the time to figure out my encoding setting in windows, excel, survey cake, rstudio and rstudio's source() function
-## and then make sure all the files are saved with consistant encoding
-## or switch to linux lol
+#first, lets make a vector of the different variations and then combine them to one name, 
+#I chose taipei medical as the standard name
 
-#anywho, my terrible terrible hack is to match as many other variables as possible and rename the chinese version of 
-#taipei medical as taipei medical university using the respondent's other info
-# this is a terrible way to do it because it requires the order of respondents in the first survey round to never change
+#here's a way of making a frequency table of the different values a variable in our data has
+# table(int_students_total$university)
+
+# now we make the index vector
+
+tmu_misspellings <- c("taipeimedicaluniversity",
+                      "tmu",
+                      "taipei medical universty",
+                      "taipei medical universitu",
+                      "taipei medial university",
+                      "taipei medical univeristy",
+                      "tmu taipei",
+                      "tmu taiwan",
+                      "tmu college of oral medicine, school of dentistry")
+
+# and then we select only those entries that match the misspellings and change the spelling
+#in a sinle step: 
+int_students_total[int_students_total$university %in% tmu_misspellings,]$university <- "taipei medical university"
+
+# one participant filled out some responses in Chinese, which creates problem with the encoding
+# ie R studio doesn't recognize Chinese characters
+# this is a problem with how R studio, R, the source function, windows and surevy monkey (I guess)
+# save and encode non- english characters
+# there is probably a better solution, but for now we're just going memorize this participant's location in the data 
+# and manualy change values. It's not a great idea bc if the order of the data ever changes, we all of the sudden will
+# change the wrong participant, however for this survey the order shouldn't change bc survey round 1 has already been completed
+
 int_students_total[100,]$university <- "taipei medical university"
 
 
@@ -67,6 +85,7 @@ int_students_total[int_students_total$university=="national taiwan university.",
 int_students_total[int_students_total$university=="ntu",]$university <- "national taiwan university"
 
 #this creates three categories of university TMU, NTU and other
+# peanut_butter is just a filler value before we change values
 int_students_total$university2 <- "peanut_butter"
 
 int_students_total[int_students_total$university=="national taiwan university",]$university2 <- "NTU"
@@ -79,7 +98,7 @@ int_students_total[int_students_total$university!="taipei medical university" &
 
 
 #this makes a frequency table of universities
-table(int_students_total$university2) 
+#table(int_students_total$university2) 
 
 
 # 2. Country of origin 

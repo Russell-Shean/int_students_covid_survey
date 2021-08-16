@@ -10,7 +10,10 @@ int_students3$survey_round <- "round_3"
 #round 3 has two new questions, this step adds these questions to rounds1 and 2, 
 #so that the number of columns match
 
-#this creates a function that theoretically reduces the amount of typing I have to do (lololol)
+#this creates a function that theoretically reduces the amount of typing I have to do (tbd if it actually saves time lol)
+
+#functions are useful because they allow us to repeat the same set of code with different variables
+
 column_adder <- function(df){
   df$july_survey <- NA
   df$email <- NA
@@ -33,8 +36,3 @@ int_students_total <- rbind(int_students1,
 # we don't need them anymore now that we've made an overall data.frame
 rm(int_students1,int_students2,int_students3)
 
-
-
-################################################################
-#### step 2   ###############################################
-###############################################################

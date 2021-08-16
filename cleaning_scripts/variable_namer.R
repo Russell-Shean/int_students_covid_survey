@@ -1,11 +1,6 @@
 ## variable renamer
 # this script builds a function that renames the variables
 
-# this loads the data
-int_students1 <- read.csv("int_students1.csv")
-int_students2 <- read.csv("int_students2.csv")
-int_students3 <- read.csv("int_students3.csv")
-
 # this step renames ***allll the variables***, so you know maybe not all of this is needed lol
 
 library(dplyr)
