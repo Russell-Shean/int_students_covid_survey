@@ -9,22 +9,121 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+```{r load packages, include=FALSE}
+require(tibble)
+require(knitr)
+require(kableExtra)
+```
 ## R Markdown
 
-Here are:
+Here are:             
+
   - variables we can consider removing 
   - responses that we can consider combining
   
 
+## Removals
+
 ### hist_contactw14days_type
 
-hist_contactw14days = Have you been in contact with someone who came to Taiwan in the last two weeks? 
+Have you been in contact with someone who came to Taiwan in the last two weeks? 
 
 Here are the range or responses, so I propose we eliminate this column without further analysis
 
-```{r satu}
-require(tibble)
-as.tibble(table(int_students$hist_contactw14days_type,useNA = "ifany"))
+```{r satu, echo=FALSE}
+
+kable(table(int_students_total$hist_contactw14days_type,useNA = "ifany"))
 
 
 ```
+
+### hist_twtravel_locations 
+
+```{r satu punto dua, echo=FALSE}
+
+kable(table(int_students_total$hist_twtravel_locations,useNA = "ifany"))
+
+
+```
+          
+&nbsp;                           
+&nbsp;          
+
+Not sure what we learn from this....
+
+
+## Combine entries
+
+
+### opn_country_highrisk_other
+
+
+Range of responses:
+
+```{r dua, echo=FALSE}
+
+kable(table(int_students_total$opn_country_highrisk_other,useNA = "ifany"))
+
+```
+          
+&nbsp;                           
+&nbsp;          
+&nbsp;         
+                 
+
+
+Possible fixes:
+
+  1. Combine all I don't know variations
+  2. Combine all everywhere variations + don't travel
+  3. Easy stuff: make newzealand new zealand etc. 
+  
+            
+&nbsp;                           
+&nbsp;          
+&nbsp;  
+  
+### opn_country_lowrisk_other
+  
+Range of responses:
+
+```{r tiga, echo=FALSE}
+
+kable(table(int_students_total$opn_country_lowrisk_other,useNA = "ifany"))
+
+```
+          
+&nbsp;                           
+&nbsp;          
+&nbsp;  
+
+Possible fixes:
+
+  1. Combine all I don't know variations
+  2. Combine all everywhere variations + don't travel
+  3. Easy stuff: make newzealand new zealand etc. 
+          
+&nbsp;                           
+&nbsp;          
+&nbsp;  
+
+### opn_infosource_worst_other
+
+
+Range of responses:
+
+```{r empat}
+
+kable(table(int_students_total$opn_infosource_worst_other,useNA = "ifany"))
+
+```
+
+&nbsp;                      
+&nbsp;     
+&nbsp;
+
+Possible fixes:
+
+1. Combine all social media responses
+2. combine (non-expert) friends/family responses

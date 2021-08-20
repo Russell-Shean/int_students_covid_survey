@@ -27,6 +27,12 @@ int_students1 <- read.csv("./data/int_students1.csv")
 int_students2 <- read.csv("./data/int_students2.csv")
 int_students3 <- read.csv("./data/int_students3.csv")
 
+#Here's the code for when I'm running linux at home
+#anyone reading this can ignore lol
+#int_students1 <- read.csv("/home/russ/Downloads/int_students1.csv")
+#int_students2 <- read.csv("/home/russ/Downloads/int_students2.csv")
+#int_students3 <- read.csv("/home/russ/Downloads/int_students3.csv")
+
 #### step2 
 # rename the variables
 source("./cleaning_scripts/variable_namer.R")

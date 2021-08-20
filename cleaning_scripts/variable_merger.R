@@ -44,7 +44,7 @@ int_students_total$survey_time <- ymd_hms(int_students_total$survey_time)
 ################################################################################
 
 
-ubt <-  int_students_total %>% 
+int_students_total <-  int_students_total %>% 
   mutate(across(everything() & !survey_time, ~replace(., . == "", NA)))
 
 
