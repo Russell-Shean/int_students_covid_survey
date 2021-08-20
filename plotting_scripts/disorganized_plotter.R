@@ -10,7 +10,7 @@ ggplot(data = int_students_total)+
   guides(fill=guide_legend(title="University"))
 
 
-plot2 <- int_students_total %>%
+plot2 <- int_students_total[int_students_total$survey_round=="round_3",] %>%
   filter(survey_time > "2021-06-01")%>%
 ggplot()+
   geom_bar(aes(x=date(survey_time),
@@ -23,7 +23,7 @@ ggplot()+
   theme(legend.direction='horizontal',
         legend.position = "top")
 
-plot1 <- int_students_total %>%
+plot1 <- int_students_total[int_students_total$survey_round=="round_3",] %>%
   filter(survey_time > "2021-06-01")%>%
   ggplot()+
   geom_bar(aes(x=date(survey_time),

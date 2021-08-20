@@ -1,0 +1,30 @@
+---
+title: "Variable cleaning proposals"
+author: "Russ"
+date: "8/20/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Here are:
+  - variables we can consider removing 
+  - responses that we can consider combining
+  
+
+### hist_contactw14days_type
+
+hist_contactw14days = Have you been in contact with someone who came to Taiwan in the last two weeks? 
+
+Here are the range or responses, so I propose we eliminate this column without further analysis
+
+```{r satu}
+require(tibble)
+as.tibble(table(int_students$hist_contactw14days_type,useNA = "ifany"))
+
+
+```

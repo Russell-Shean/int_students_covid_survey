@@ -1,0 +1,56 @@
+---
+title: "International Students  analysis"
+author: "Russ"
+date: "8/16/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Intro
+This is Russ's first stab at analysis for the international student survey. 
+
+
+### Part 1: Exclusion criteria
+ The main goals of the analysis are:
+- see if there are repeated emails and Ip.address with similiar data (did people take the survey more than once for more money?)
+- examine range of each variable (Are there obviously weird results? like people under the age of 18 or over 90? Taiwanese local student who took the survey? )
+- look for missing or unusable values (Are they so missing or so off that they need to be excluded)
+- look for other exclusion criteria (Other schools aside from TMU)
+- Formalize exclusion criteria, exclude people with code, and make exclusion flow chart
+
+### Part 2: Comparability of two cross-sectional group of survey respondents
+- Compare the baseline characteristics of the January Survey group and the July survey group
+- Chi square test? 
+
+### Part 3: Outcomes of interest
+- health behaviors (Did they change?)
+  -- Look at each behavior individually? Or develop a composite score? (lit review may help)
+  -- make composite by category?
+  -- Odds ratio?
+- beliefs and perceptions
+  -- usefulness of masks? Perception of risk for different countries?
+- Impressions of the Taiwanese govt
+-- change after outbreak?
+-- Do chinese speakers have different experiences?
+-- Does information source/ media choice affect impressions? 
+-Main dependent variable: time? 
+  -- then stratify/control for other demographics? 
+  -- univariate regression for cohort group (time) multivariate regression for time + other factors? 
+  
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

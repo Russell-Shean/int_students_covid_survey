@@ -1,0 +1,42 @@
+---
+title: "Manuscript outline"
+author: "Russ"
+date: "8/16/2021"
+output: html_document
+---
+
+# Intro
+
+- Taiwan had covid under control
+- then it didn't
+- We have survey results from before may and after may
+- other papers have proposed that colletcitivly experience trauma can lead to behavior changes
+  -- models
+  -- previous examples
+- This outbreak allows a natural experiment to observe behavior difference before and after Covid-19 outbreak
+- to date few previous studies have looked at behavior changes following infectious disease outbreaks
+- this is important because it could lead to better response + mental health counseling
+- We also looked at information source, lagnuage group, this could help design more effective methods to counter infodemics and provide culturally and linguistically appropriate covid messaging in Taiwan. 
+
+
+# methods
+
+- cohort size
+- survey monkey
+- paid survey
+- collection
+
+- question formulation
+-- lit review
+-- expert review
+-- internal consistancy and validity? chronbackers etc?
+
+- analysis was done in R!!!
+
+
+# results
+
+# Discussion 
+
+
+# conclusion 
