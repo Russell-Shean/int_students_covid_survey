@@ -36,3 +36,33 @@ int_students_total <- rbind(int_students1,
 # we don't need them anymore now that we've made an overall data.frame
 rm(int_students1,int_students2,int_students3)
 
+
+
+#this step  removes the stupid (system generated columns with all NA values) variables we don't need
+
+# this defines a function that looks to see if all the values in a column are NA
+all.naas <- function(x){all(is.na(x))}
+
+# this step applies the function we just made to all the columns
+apply(int_students_total,2,all.naas)
+
+#this step tells us which of the columns had only nas and only shows those columns
+which(apply(int_students_total,2,all.naas))
+
+#this makes a vector with the names of those columns
+
+stupid_columns <- names(which(apply(int_students_total,2,all.naas)))
+
+stupid_columns <- c(stupid_columns, "user_id")
+
+
+# this removes the stupid columns with all blanks
+
+require(dplyr)
+
+int_students_total <- int_students_total %>%
+  dplyr::select(-all_of(stupid_columns))
+
+#this removes the stupid_columns vector now that we no longer need it
+rm(stupid_columns)
+

@@ -38,6 +38,19 @@ int_students_total[,c("survey_time_secs","age","months_in_taiwan")] <- data.fram
 require(lubridate)
 int_students_total$survey_time <- ymd_hms(int_students_total$survey_time)
 
+
+#####################################################################################
+## change "" to NA     ##########################################################
+################################################################################
+
+
+ubt <-  int_students_total %>% 
+  mutate(across(everything() & !survey_time, ~replace(., . == "", NA)))
+
+
+
+
+
 #################################################################################
 # variable specific fixes 
 ################################################################################
@@ -62,7 +75,9 @@ tmu_misspellings <- c("taipeimedicaluniversity",
                       "taipei medical univeristy",
                       "tmu taipei",
                       "tmu taiwan",
-                      "tmu college of oral medicine, school of dentistry")
+                      "tmu college of oral medicine, school of dentistry",
+                      "taipei medical univesity",
+                      "graduated recently from tmu")
 
 # and then we select only those entries that match the misspellings and change the spelling
 #in a sinle step: 
@@ -76,13 +91,17 @@ int_students_total[int_students_total$university %in% tmu_misspellings,]$univers
 # and manualy change values. It's not a great idea bc if the order of the data ever changes, we all of the sudden will
 # change the wrong participant, however for this survey the order shouldn't change bc survey round 1 has already been completed
 
-int_students_total[100,]$university <- "taipei medical university"
+int_students_total[c(100,353),]$university <- "taipei medical university"
 
 
 
 #National Taiwan University fixes
-int_students_total[int_students_total$university=="national taiwan university.",]$university <- "national taiwan university"
-int_students_total[int_students_total$university=="ntu",]$university <- "national taiwan university"
+
+ntu_misspellings <- c("national taiwan university.",
+                      "ntu")
+
+int_students_total[int_students_total$university %in% ntu_misspellings,]$university <- "national taiwan university"
+
 
 #this creates three categories of university TMU, NTU and other
 # peanut_butter is just a filler value before we change values
@@ -168,3 +187,7 @@ table(int_students_total$comordidities_type, useNA = "ifany")
 
 # 6 
 
+
+
+#this removes vectors we no longer need 
+rm(ntu_misspellings,tmu_misspellings)

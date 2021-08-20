@@ -34,12 +34,14 @@ source("./cleaning_scripts/variable_namer.R")
 
 ### step3 
 ## combine all three survey rounds 
+## also removes some stupid blank columns
 source("./cleaning_scripts/survey_round_merger.R")
 
 
 ## step4 combines duplicate or typo entries for each question
 ## eg turns "Taipei Mediculee" and "Tmu" all into "tmu"
 ## it also fixes the variable class for numbers and dates
+## and coverts the response "" into NA
 
 source("./cleaning_scripts/variable_merger.R")
 
