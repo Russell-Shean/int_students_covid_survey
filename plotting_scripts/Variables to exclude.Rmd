@@ -5,66 +5,235 @@ date: "8/20/2021"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup,include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
 ```{r load packages, include=FALSE}
-require(tibble)
 require(knitr)
 require(kableExtra)
 ```
-## R Markdown
+
+## Intro
+This is Russ's first stab at analysis for the international student survey. 
+
+
+### Part 1: Exclusion criteria
+ The main goals of the analysis are:
+- see if there are repeated emails and Ip.address with similiar data (did people take the survey more than once for more money?)
+- examine range of each variable (Are there obviously weird results? like people under the age of 18 or over 90? Taiwanese local student who took the survey? )
+- look for missing or unusable values (Are they so missing or so off that they need to be excluded)
+- look for other exclusion criteria (Other schools aside from TMU)
+- Formalize exclusion criteria, exclude people with code, and make exclusion flow chart
+
+### Part 2: Comparability of two cross-sectional group of survey respondents
+- Compare the baseline characteristics of the January Survey group and the July survey group
+- Chi square test? 
+
+### Part 3: Outcomes of interest
+- health behaviors (Did they change?)
+  -- Look at each behavior individually? Or develop a composite score? (lit review may help)
+  -- make composite by category?
+  -- Odds ratio?
+- beliefs and perceptions
+  -- usefulness of masks? Perception of risk for different countries?
+- Impressions of the Taiwanese govt
+-- change after outbreak?
+-- Do chinese speakers have different experiences?
+-- Does information source/ media choice affect impressions? 
+-Main dependent variable: time? 
+  -- then stratify/control for other demographics? 
+  -- univariate regression for cohort group (time) multivariate regression for time + other factors? 
+  
+
+
+
+
+
+
+#survey responses after July 1st
+#stratified by university and if they responded to July survey
+
+
+```{r uno}
+
+plot2 <- int_students_total[int_students_total$survey_round=="round_3",] %>%
+  filter(survey_time > "2021-06-01")%>%
+ggplot()+
+  geom_bar(aes(x=date(survey_time),
+               fill=university2))+
+  theme_bw()+
+  #ggtitle("Survey Responses by Day")+
+  xlab("Date of Response")+
+  ylab("Number of Responses")+ 
+  guides(fill=guide_legend(title="University")) +
+  theme(legend.direction='horizontal',
+        legend.position = "top")
+
+plot1 <- int_students_total[int_students_total$survey_round=="round_3",] %>%
+  filter(survey_time > "2021-06-01")%>%
+  ggplot()+
+  geom_bar(aes(x=date(survey_time),
+               fill=july_survey))+
+  theme_bw()+
+  #ggtitle("Survey Responses by Day")+
+  xlab("Date of Response")+
+  ylab("Number of Responses")+ 
+  guides(fill=guide_legend(title="Did you fill out the July survey?"))+
+  theme(legend.direction='horizontal',
+        legend.position = "top")
+
+
+library(ggpubr)
+
+
+ggarrange(plotlist = list(plot1,plot2),nrow = 2)
+
+
+
+```
+
+
+
+
+
+
+
+# Draft: table 1 version 1.0
+## Basic characteristics stratified by round 1 or round 3 
+
+Round 3 refers to people filling out the survey after August 4th        
+Round 1 to before august 4th 
+
+- Test for continous variables = anova: analysis of variance test; the default test for continuous variables. When LHS variable has two levels, equivalent to two-sample t-test.
+- test for categorical variables = chisq: chi-square goodness of fit test for equal counts of a categorical variable across categories; the default for categorical or factor variables
+- test for orderd = trend: trend test for equal distribution of an ordered variable across a categorical variable; the default for ordered factor variables      
+(currently none of the variables in this data set are set as ordered factors, but it would make sense for many of them to be changed to ordered factors, especially education level, chinese language ability and all the opinion/knowledge/behavior change variables), 
+- NA or missing values show up as Nmiss in the table, values are presented in a count (percent) format
+
+
+```{r results='asis'}
+
+
+  kable(summary(tableby(survey_round2~age+
+                          gender+
+                          country_origin+  
+                          ethnicity+
+                          chinese_lang+
+                          native_lang+
+                          religion+
+                          religion_attendance+
+                          education_level+
+                          university2+
+                          health_background+
+                          months_in_taiwan+
+                          opn_twgvt_enoughinfo+
+                          opn_twgvt_enougregs+
+                          opn_infosource_worst+
+                          opn_country_lowrisk+
+                          opn_country_highrisk+
+                          july_survey, 
+                        data = int_students_total,
+                        control=tableby.control(total=FALSE,
+                                                cat.simplify=FALSE,
+                                                numeric.test = "anova",
+                                                cat.test = "chisq",
+                                                ordered.test = "trend",
+                                                cat.stats=c("Nmiss",
+                                                            "countpct"),
+                                                digits=1)),text = TRUE))
+  
+
+
+```
+
+# Draft: table 1 version 1.1
+## Basic characteristics stratified by University for responses after august 4th
+
+
+
+
+```{r two results='asis'}
+
+
+  kable(summary(tableby(university2~age+
+                          gender+
+                          country_origin+  
+                          ethnicity+
+                          chinese_lang+
+                          native_lang+
+                          religion+
+                          religion_attendance+
+                          education_level+
+                          survey_round2+
+                          health_background+
+                          months_in_taiwan+
+                          opn_twgvt_enoughinfo+
+                          opn_twgvt_enougregs+
+                          opn_infosource_worst+
+                          opn_country_lowrisk+
+                          opn_country_highrisk+
+                          july_survey, 
+                        data = int_students_total[int_students_total$survey_round2=="round_3",],
+                        control=tableby.control(total=FALSE,
+                                                cat.simplify=FALSE,
+                                                numeric.test = "anova",
+                                                cat.test = "chisq",
+                                                ordered.test = "trend",
+                                                cat.stats=c("Nmiss",
+                                                            "countpct"),
+                                                digits=1)),text = TRUE))
+  
+
+
+```
+
+## Variable exclusions and combinations
 
 Here are:             
 
-  - variables we can consider removing 
-  - responses that we can consider combining
-  
+  - variables we can *remove* 
+  - responses we can *combine*
+
 
 ## Removals
 
 ### hist_contactw14days_type
 
 Have you been in contact with someone who came to Taiwan in the last two weeks? 
+&nbsp;                      
+&nbsp;     
+&nbsp;
 
-Here are the range or responses, so I propose we eliminate this column without further analysis
+Here are the range of responses
+
+&nbsp;     
+&nbsp;
 
 ```{r satu, echo=FALSE}
-
 kable(table(int_students_total$hist_contactw14days_type,useNA = "ifany"))
-
-
 ```
 
-### hist_twtravel_locations 
 
-```{r satu punto dua, echo=FALSE}
-
-kable(table(int_students_total$hist_twtravel_locations,useNA = "ifany"))
-
-
-```
-          
-&nbsp;                           
-&nbsp;          
-
-Not sure what we learn from this....
-
+I propose we eliminate this column
 
 ## Combine entries
 
 
 ### opn_country_highrisk_other
 
+If you or your friend family will go abroad for travel study  which country  city  you will recommend to go  to avoid being infected of COVID 19, If other  please specify
+&nbsp;                           
+&nbsp;          
+&nbsp;         
+      
 
 Range of responses:
+&nbsp;     
+&nbsp;
 
 ```{r dua, echo=FALSE}
-
 kable(table(int_students_total$opn_country_highrisk_other,useNA = "ifany"))
-
 ```
           
 &nbsp;                           
@@ -85,13 +254,17 @@ Possible fixes:
 &nbsp;  
   
 ### opn_country_lowrisk_other
-  
+
+Which nation or region do you think people have the lowest risk of acquiring COVID 19, if other please specify 
+&nbsp;                           
+&nbsp;          
+&nbsp;  
 Range of responses:
+&nbsp;     
+&nbsp;
 
 ```{r tiga, echo=FALSE}
-
 kable(table(int_students_total$opn_country_lowrisk_other,useNA = "ifany"))
-
 ```
           
 &nbsp;                           
@@ -110,13 +283,14 @@ Possible fixes:
 
 ### opn_infosource_worst_other
 
+Regarding COVID 19 and according to your own opinion  which of the following information source is most unreliable   not about information path and presumed original source  we only question about the immediate information source, if other please specify
 
 Range of responses:
+&nbsp;     
+&nbsp;
 
-```{r empat}
-
+```{r empat, echo=FALSE}
 kable(table(int_students_total$opn_infosource_worst_other,useNA = "ifany"))
-
 ```
 
 &nbsp;                      
@@ -127,3 +301,184 @@ Possible fixes:
 
 1. Combine all social media responses
 2. combine (non-expert) friends/family responses
+
+### hist_twtravel_locations
+
+In the last 2 weeks  have you traveled within Taiwan, If yes  please specify
+&nbsp;                      
+&nbsp;     
+&nbsp;
+Here are the range of responses
+&nbsp;     
+&nbsp;
+  
+  
+```{r lima, echo=FALSE}
+kable(table(int_students$hist_contactw14days_type,useNA = "ifany"))
+
+
+```
+
+
+&nbsp;                      
+&nbsp;     
+&nbsp;
+
+Possible fixes:
+
+Combine locations by City/County and presume that:
+
+  1. xemending is Ximen ding (西門町)
+  2. Keelung + coastal areas = keelung and new taipei city
+  3. 
+  
+  
+  
+### opn_twgvt_dislikemeasures_other 
+
+What are the measures adopted by government of Taiwan you dislike the most during the epidemic of COVID 19   select all that apply，If other  please specify 
+
+&nbsp;                      
+&nbsp;     
+&nbsp;
+Here are the range of responses
+&nbsp;     
+&nbsp;
+
+```{r combine enam, echo=FALSE}
+kable(table(int_students$opn_twgvt_dislikemeasures_other ,useNA = "ifany"))
+
+
+```
+&nbsp;                      
+&nbsp;     
+&nbsp;
+Possible fixes:
+
+1. border control
+2. no help for foreigners
+3. no shortened quarantine for vaccinated travelers
+4. taping off parks and water fountains
+5. vaccines
+
+It's not clear for these responses why survey participants dislike a particular measure. It could be because they think the measure is burdensome or unnecessary **OR** because they don't think the government implemented the measure as fully or as effectively as they could have. As an example, it's unclear for vaccines if they're criticizing vaccines generally or the Taiwanese government's vaccination campaign like the other vaccine respondent. Similarly, it's not clear if survey participants complaining about border control are complaining about the border control rules being too strict or not strict enough. 
+
+
+### info_source_other
+
+Which source s  of information you access the most to learn about COVID 19   Select all that apply, If others  please specify
+&nbsp;                      
+&nbsp;     
+&nbsp;
+Here are the range of responses
+
+```{r combine tujuh, echo=FALSE}
+kable(table(int_students$info_source_other ,useNA = "ifany"))
+
+
+```
+&nbsp;                      
+&nbsp;     
+&nbsp;
+Possible fixes: 
+
+1. Combine all variations of "research articles", "reputable journals", "medical journals", "peer reviewed journals", etc
+2. Combine all school and university variations
+3. Add an option for scientific journals on future surveys? 
+
+
+# native_lang_other
+
+What is your native language, if other please specify: 
+
+&nbsp;                      
+&nbsp;     
+&nbsp;
+Here are the range of responses
+
+```{r combine delapan, echo=FALSE}
+kable(table(int_students$info_source_other ,useNA = "ifany"))
+
+
+```
+&nbsp;                      
+&nbsp;     
+&nbsp;
+Possible fixes: 
+Combine alternate spellings of the same language       
+1. ("bangla", "bangladeshi", "bengale", "bengali") -> "bangla"        
+2. ("bwamou", "bwamu") -> "          
+3. ("mongolia", "mongolian") -> "mongolian          
+4. ("chichewa ( malawi national language)")  -> "chichewa"         
+5. ("kannada and hindi")  ->  "kannada, hindi"        
+6. ("tumbuka/chichewa") -> "chichewa, tumbuka"       
+7. ("tumbuka/chichewa") -> "tumbuka, chichewa"        
+8. ("hindi punjabi")  -> "hindi, punjabi"           
+9. ("hindi, malayalam") -> "malayalam, hindi"        
+
+# health_background_type
+
+Do you have any health related education background, if yes please specify 
+
+
+&nbsp;                      
+&nbsp;     
+&nbsp;
+Here are the range of responses
+
+```{r combine sembilan, echo=FALSE}
+kable(table(int_students$health_background_type ,useNA = "ifany"))
+
+
+```
+&nbsp;                      
+&nbsp;     
+&nbsp;
+
+
+Possible fixes: 
+
+combine all variations of:
+
+1. medical doctor
+2. public health
+3. dentist
+4. dental hygienist
+5. biomedical/ biomedical research
+6. healthcare administration
+7. nursing
+8. nutrition
+9. pharmacy
+10 veterinary medicine
+11. psychology
+12. 
+
+
+### comordidities_type
+
+Do you have any chronic diseases   e g  diabetes  chronic renal insufficiency  etc, if yes please specify
+
+
+&nbsp;                      
+&nbsp;     
+&nbsp;
+Here are the range of responses
+
+
+```{r combine sepuluh, echo=FALSE}
+kable(table(int_students$comordidities_type ,useNA = "ifany"))
+
+
+```
+
+&nbsp;                      
+&nbsp;     
+&nbsp;
+Possible fixes: 
+
+combine all variations of:
+
+1. kidney conditions
+2. heart conditions
+
+
