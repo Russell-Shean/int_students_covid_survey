@@ -42,6 +42,11 @@ int_students_total$survey_time <- ymd_hms(int_students_total$survey_time)
 #####################################################################################
 ## change "" to NA     ##########################################################
 ################################################################################
+#here's a cool trick from stackoverflow:  https://stackoverflow.com/questions/35610437/using-dplyr-to-conditionally-replace-values-in-a-column
+#We're going to use it to replace all the "" values with NA
+#Why survey cake thought "" was a useful replacement for NA is beyond me
+#It's probably also possible to specify that "" should be read in as NA during the read.csv() step, so if this is really slow, we'll try that
+
 
 
 int_students_total <-  int_students_total %>% 
@@ -163,10 +168,16 @@ int_students_total[int_students_total$country_origin=="swaziland",]$country_orig
 # here we're going to be pretty conservative about combining categories
 
 #west african
-int_students_total[int_students_total$ethnicity_other=="western african",]$ethnicity_other <- "west african"
+int_students_total$ethnicity_other <- ifelse(!is.na(int_students_total$ethnicity_other) & 
+                                               int_students_total$ethnicity_other == "western african",
+                                             "west african",
+                                             int_students_total$ethnicity_other)
 
 #micronesian
-int_students_total[int_students_total$ethnicity_other=="micronesia",]$ethnicity_other <- "micronesian"
+int_students_total$ethnicity_other <- ifelse(!is.na(int_students_total$ethnicity_other) & 
+                                               int_students_total$ethnicity_other == "micronesia",
+                                             "micronesian",
+                                             int_students_total$ethnicity_other)
 
 
 # 4. Health background
