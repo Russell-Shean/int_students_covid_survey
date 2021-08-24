@@ -7,7 +7,7 @@ require(purrr)
 require(lubridate)
 
 int_students <- int_students_total %>% 
-  dplyr::select(-all_of(c("email","ip_address")))%>%
+  dplyr::select(-all_of(c("email","ip_address","survey_time_secs")))%>%
   select_if(negate(is.numeric))%>%
   select_if(negate(is.Date))%>%
   select_if(negate(is.POSIXct))
@@ -16,7 +16,8 @@ int_students <- int_students_total %>%
   
   
   
-  apply(int_students,2, natabler)
+  
+apply(int_students,2, natabler)
 
   
 
@@ -28,6 +29,10 @@ int_students <- int_students_total %>%
   
 
 
+  table(int_students_total$opn_country_highrisk_other)
+
   
-  
+  #opn_country_highrisk_other
+  # combine all I don't knows
+  # combine all nowhere is safes
   
