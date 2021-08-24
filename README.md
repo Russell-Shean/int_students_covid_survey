@@ -2,8 +2,8 @@
 R code for data cleaning and analysis of an survey of COVID-19 related health beliefs and behaviors among international students in Taiwan. 
 
 # How this is organized
-- The best way to understand what I've done so far is to look at the data_cleaning_master_script.R in the cleaning_scripts folder. It calls other scripts using the source() function
-- The best file to look at to see how I've combined values is the variable_merger.R file that's also in the cleaning_scripts folder
+- The best way to understand what I've done so far is to look at the **data_cleaning_master_script.R** in the **cleaning_scripts** folder. It calls other scripts using the source() function
+- The best file to look at to see how I've combined values is the **variable_merger.R** file that's also in the **cleaning_scripts** folder
 - This github website is where I'll put any updates and changes to the code
 - I can add SSPS syntax code to a seperate folder
 - If you create a github account, I can make you a colaborater which would allow you to make changes to files and also to set the repository to private so that we can share data
