@@ -16,5 +16,5 @@ R code for data cleaning and analysis of an survey of COVID-19 related health be
 
 
 
-
+# 
 <img src="https://github.com/Russell-Shean/int_students_covid_survey/raw/main/figures/responseplot1.jpeg"/>
