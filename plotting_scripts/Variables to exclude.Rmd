@@ -9,6 +9,14 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+Here are two better ways to show tables than arsenal. I'm going to convert to using these functions later
+
+#https://cran.r-project.org/web/packages/gtsummary/vignettes/tbl_summary.html
+#https://cran.r-project.org/web/packages/expss/vignettes/labels-support.html
+
+
+
 ```{r load packages, include=FALSE}
 require(knitr)
 require(kableExtra)
@@ -115,7 +123,7 @@ Round 1 to before august 4th
 ```{r results='asis'}
 
 
-  kable(summary(tableby(survey_round2~age+
+  kable(summary(tableby(survey_round~age+
                           gender+
                           country_origin+  
                           ethnicity+

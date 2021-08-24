@@ -1,0 +1,40 @@
+---
+title: "Table1"
+author: "Russ"
+date: "8/24/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+More information about how these tables were generated : https://cran.r-project.org/web/packages/gtsummary/vignettes/tbl_summary.html 
+
+# Table 1: simple summary
+
+```{r simple summary}
+require(gtsummary)
+int_students_total %>% tbl_summary()
+
+
+```
+
+# Table 1: by university
+
+```{r by uni}
+require(gtsummary)
+int_students_total %>% tbl_summary(by="university2")
+
+
+```
+
+# Table 1: by survey round
+
+```{r by survey round}
+require(gtsummary)
+int_students_total %>% tbl_summary(by="survey_round")
+
+
+```
