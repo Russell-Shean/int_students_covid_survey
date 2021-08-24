@@ -1,7 +1,7 @@
 ## Basic descriptive analysis for International students survey
 ## Author = Russ
-## last update: "2021-08-13 16:37:44 CST"
-#Sys.time()
+## last update: "2021-08-24 13:26:40 CST"
+# Sys.time()
 
 ##################################################################
 
@@ -9,6 +9,10 @@
 # and do initial data cleaning
 # It sources other script files that do the actual work
 
+#IMPORTANT: because of problems with computer encoding,  this script only works for me when I set my system language to english
+# (windows doesn't really standardize encoding especially for foreign languages and I think there may be Chinese apostrophes in some of the variable names)
+# if you are using a mac or linux this will probably be less of a problem
+# changing the encoding for the csv files and these scripts may fix the problem, but just changing the system language may be easier lol 
 
 ####################################################################
 
@@ -45,6 +49,18 @@ source("./cleaning_scripts/survey_round_merger.R")
 
 source("./cleaning_scripts/variable_merger.R")
 
+
+## step5 
+## separate out into separate yes or no columns 
+## all of the check box responses survey monkey combined in a single column
+
+source("./cleaning_scripts/variable_separator.R")
+
+## step6 
+## make numbers numeric
+## make characters factors
+
+source("./cleaning_scripts/class_converter.R")
 
 ## this step writes the data.frame to a csv file
 
