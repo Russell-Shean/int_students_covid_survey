@@ -291,7 +291,8 @@ doctor_misspellings <- c("doctor",
                          "medicine and public health",
                          "medicine, public health",
                          "general surgeon",
-                         "pharmacy, pharmacology and medicine")
+                         "pharmacy, pharmacology and medicine",
+                         "nephrologist")
 
 int_students_total <-  int_students_total %>% 
   mutate(across(everything() & !survey_time, ~replace(., . %in% doctor_misspellings, "medicine")))
@@ -310,6 +311,7 @@ int_students_total <-  int_students_total %>%
 
 int_students_total$health_background_type[grepl("nurse|nursing", int_students_total$health_background_type)] <- "nursing"
 
+# 
 
 
 # 5. Chronic comorbidities
@@ -329,6 +331,37 @@ table(int_students_total$opn_infosource_worst)
 # 7 Taiwan travel history
 
 table(int_students_total$hist_twtravel_locations)
+
+# 8 other types of information sources
+
+# this combines all the entries containing the phrase "journal"
+# and renames them as "scientific journal"
+int_students_total$info_source_other[grepl("journal", int_students_total$info_source_other)] <- "scientific journal"
+
+#this combines a variety of variations of scientific journal
+# we could have done the same thing with a search for "article"
+# but I want to keep it more narrow in case someone who fills out
+# this survey in the future puts "newspaper article" or something in this field
+
+int_students_total$info_source_other[grepl("scientific articles|research articles|pubmed|scientist papers", int_students_total$info_source_other)] <- "scientific journal"
+
+
+
+# this combines all the entries containing the phrase "school" or university
+int_students_total$info_source_other[grepl("school|university", int_students_total$info_source_other)] <- "school"
+
+
+
+# native languages other
+
+#mongolian
+int_students_total$native_lang_other_type <- ifelse(!is.na(int_students_total$native_lang_other_type) & 
+                                               int_students_total$native_lang_other_type == "mongolia",
+                                             "mongolian",
+                                             int_students_total$native_lang_other_type)
+
+
+
 
 #this removes vectors we no longer need 
 rm(ntu_misspellings,tmu_misspellings, dentist_misspellings,doctor_misspellings,dunno_misspellings,no_country_misspellings,nz_misspellings,usa_misspellings)

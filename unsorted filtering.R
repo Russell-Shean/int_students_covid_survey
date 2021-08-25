@@ -7,7 +7,7 @@ require(purrr)
 require(lubridate)
 
 int_students <- int_students_total %>% 
-  dplyr::select(-all_of(c("email","ip_address","survey_time_secs")))%>%
+  dplyr::select(-all_of(c("survey_time_secs")))%>%
   select_if(negate(is.numeric))%>%
   select_if(negate(is.Date))%>%
   select_if(negate(is.POSIXct))

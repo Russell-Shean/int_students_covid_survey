@@ -97,10 +97,35 @@ f2<- function(x){
 int_students_total <- int_students_total%>%
   mutate(
     across(dplyr::contains("bvr") |
-             dplyr::contains("hist") & 
+             dplyr::contains("hist")& 
              !dplyr::contains("twtravel") & 
              !dplyr::contains("contactw14days") ,
            f2))
+
+int_students_total <- int_students_total%>%
+mutate(
+  across(dplyr::contains("attendance"),
+         f2))
+
+
+# Chinese language ability
+# it makes sense that language ability would have values that are higher or 
+# lower than each other, i.e advanced > some > none
+
+int_students_total <- int_students_total %>%
+  mutate(chinese_lang = factor(chinese_lang, 
+                               levels = c("none",
+                                          "basic", 
+                                             "intermediate",
+                                             "advanced" 
+                                              )))
+
+
+
+
+
+
+
 
 
 

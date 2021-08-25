@@ -1,7 +1,7 @@
 ## Basic descriptive analysis for International students survey
 ## Author = Russ
-## last update: "2021-08-24 13:26:40 CST"
-# Sys.time()
+## last update: "2021-08-25 16:33:56 CST"
+## Sys.time()
 
 ##################################################################
 
@@ -27,9 +27,19 @@
 # you can find/set the working directory with getwd() or setwd()
 # I usually keep things organized in a project in R studio with an associated working directory
 
-int_students1 <- read.csv("./data/int_students1.csv")
-int_students2 <- read.csv("./data/int_students2.csv")
-int_students3 <- read.csv("./data/int_students3.csv")
+#Here's an old path that I may use again at some point if 
+# we ever change the repository to private
+
+#int_students1 <- read.csv("./data/int_students1.csv")
+#int_students2 <- read.csv("./data/int_students2.csv")
+#int_students3 <- read.csv("./data/int_students3.csv")
+
+#this file path you're going to have to change yourself to wherever
+# you store the files
+int_students1 <- read.csv("C:/Users/rshea/Desktop/old computer/int_students_covid_data/int_students1.csv")
+int_students2 <- read.csv("C:/Users/rshea/Desktop/old computer/int_students_covid_data/int_students2.csv")
+int_students3 <- read.csv("C:/Users/rshea/Desktop/old computer/int_students_covid_data/int_students3.csv")
+
 
 #### step2 
 # rename the variables
