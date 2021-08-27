@@ -14,6 +14,7 @@ R code for data cleaning and analysis of an survey of COVID-19 related health be
 - 大部分的value合并都在**cleaning_scripts**資料夾中的**variable_merger.R**檔案， 可以參考裏面的comments（#開頭的）知道我把那些values合并起來
 - 之後也可以放SPSS syntax放這
 - 如果你也建立一個GitHub賬號 （很簡單！），我可以改變隱私設定讓只有我們團隊能夠看到，然後這樣可以比較直接分享data
+- github可以🔗到Rstudio
 
 
 
