@@ -1,0 +1,168 @@
+---
+title: "國際生問卷初步分析一"
+author: "Russ"
+date: "8/27/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Survey participants with high and low knowledge scores     
+&nbsp;                      
+&nbsp;     
+&nbsp;        
+
+```{r cars, echo=FALSE}
+library(dplyr)
+library(gtsummary)
+Table1 <- int_students_total %>%
+  filter(knowledge_total < 4) %>%
+  select(gender,
+         age,
+         country_origin2,
+         chinese_lang,
+         religion_attendance,
+         religion, university2,
+         survey_round,
+         education_level,
+         health_background, 
+         months_in_taiwan, 
+         info_source_socialmedia,
+         info_source_newspaper,
+         info_source_online,
+         info_source_friends)  %>% 
+  tbl_summary() 
+
+table2 <- int_students_total %>%
+  filter(knowledge_total > 5) %>%
+  select(gender,
+         age,
+         country_origin2,
+         chinese_lang,
+         religion_attendance,
+         religion, university2,
+         survey_round,
+         education_level,
+         health_background, 
+         months_in_taiwan, 
+         info_source_socialmedia,
+         info_source_newspaper,
+         info_source_online,
+         info_source_friends) %>% 
+  tbl_summary()
+
+table3 <- tbl_merge(
+  tbls = list(Table1, table2), 
+    tab_spanner = c("**Low knowledge </= 3**", "**High Knowledge >/= 6**"))
+
+table3
+#%>%
+  # as_gt(include = -cols_align) %>%
+  #gt::tab_source_note(gt::md("**"))
+
+
+```
+
+# Round 3 only
+Here's the same table repeated for ***only*** the third survey round
+
+&nbsp;                      
+&nbsp;     
+&nbsp;        
+
+```{r cars dua, echo=FALSE}
+library(dplyr)
+library(gtsummary)
+Table1 <- int_students_total %>%
+  filter(survey_round=="round_3") %>%
+  filter(knowledge_total < 4) %>%
+  select(gender,
+         age,
+         country_origin2,
+         chinese_lang,
+         religion_attendance,
+         religion, university2,
+         survey_round,
+         education_level,
+         health_background, 
+         months_in_taiwan, 
+         info_source_socialmedia,
+         info_source_newspaper,
+         info_source_online,
+         info_source_friends)  %>% 
+  tbl_summary() 
+
+table2 <- int_students_total %>%
+  filter(survey_round=="round_3") %>%
+  filter(knowledge_total > 5) %>%
+  select(gender,
+         age,
+         country_origin2,
+         chinese_lang,
+         religion_attendance,
+         religion, university2,
+         survey_round,
+         education_level,
+         health_background, 
+         months_in_taiwan, 
+         info_source_socialmedia,
+         info_source_newspaper,
+         info_source_online,
+         info_source_friends) %>% 
+  tbl_summary()
+
+table3 <- tbl_merge(
+  tbls = list(Table1, table2), 
+    tab_spanner = c("**Low knowledge </= 3**", "**High Knowledge >/= 6**"))
+
+table3
+#%>%
+  # as_gt(include = -cols_align) %>%
+  #gt::tab_source_note(gt::md("**"))
+
+
+```
+
+&nbsp;                      
+&nbsp;     
+&nbsp; 
+&nbsp;                      
+&nbsp;     
+&nbsp; 
+
+## Why was 6 the cut off for high knowledge?
+Here are the total number of people who answered each knowledge question correctly          
+
+```{r confusing, echo=FALSE}
+int_students_total %>% 
+  dplyr::select(opn_feverless_transm_yesno:knowledge_present)%>% 
+  colSums()
+
+```
+         
+         opn_onlycough_transm_yesno = Please select a proper perception toward the following questions    SARS CoV 2  Virus causing COVID 19  spreads through respiratory droplets only when infected people cough and sneeze         
+
+Looks like the question about coughing may have confused people....      
+
+&nbsp;                      
+&nbsp;     
+&nbsp; 
+&nbsp;                      
+&nbsp;     
+&nbsp;          
+
+
+## Why was 3 the cut off for low knowledge?
+- Because we want to know who *really* doesn't get it 
+- And not accidentally include people who misread a question or two
+&nbsp;                      
+&nbsp;     
+&nbsp; 
+&nbsp;                      
+&nbsp;     
+&nbsp; 
+&nbsp;                      
+&nbsp;     
+&nbsp;

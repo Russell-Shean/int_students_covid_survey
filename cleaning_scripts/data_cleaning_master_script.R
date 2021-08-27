@@ -1,6 +1,7 @@
+## Data Cleaning script
 ## Basic descriptive analysis for International students survey
 ## Author = Russ
-## last update: "2021-08-25 16:33:56 CST"
+## last update: "2021-08-26 13:34:51 CST"
 ## Sys.time()
 
 ##################################################################
@@ -40,6 +41,11 @@ int_students1 <- read.csv("C:/Users/rshea/Desktop/old computer/int_students_covi
 int_students2 <- read.csv("C:/Users/rshea/Desktop/old computer/int_students_covid_data/int_students2.csv")
 int_students3 <- read.csv("C:/Users/rshea/Desktop/old computer/int_students_covid_data/int_students3.csv")
 
+# work computer
+int_students1 <- read.csv("C:/Users/user/King County Restaurant Inspections/int_student_survey_round3/data/int_students1.csv")
+int_students2 <- read.csv("C:/Users/user/King County Restaurant Inspections/int_student_survey_round3/data/int_students2.csv")
+int_students3 <- read.csv("C:/Users/user/King County Restaurant Inspections/int_student_survey_round3/data/int_students3.csv")
+
 
 #### step2 
 # rename the variables
@@ -52,7 +58,8 @@ source("./cleaning_scripts/variable_namer.R")
 source("./cleaning_scripts/survey_round_merger.R")
 
 
-## step4 combines duplicate or typo entries for each question
+## step 4
+## combines duplicate or typo entries for each question
 ## eg turns "Taipei Mediculee" and "Tmu" all into "tmu"
 ## it also fixes the variable class for numbers and dates
 ## and coverts the response "" into NA
@@ -60,24 +67,44 @@ source("./cleaning_scripts/survey_round_merger.R")
 source("./cleaning_scripts/variable_merger.R")
 
 
-## step5 
+## step 5
 ## separate out into separate yes or no columns 
 ## all of the check box responses survey monkey combined in a single column
 
 source("./cleaning_scripts/variable_separator.R")
 
-## step6 
+### step 6
+## find duplicate emails
+## check to see if other rows are duplicated too
+source("./cleaning_scripts/repeat_email_finder.R")
+
+# we need to make decisions about these entries
+# I will finish make my entry compare function so we can see how many of the 
+# values (columns) are exact matches soon
+# it's basically done just very slow, so I need to replace loops and stuff with vectors
+
+## step 7
 ## make numbers numeric
 ## make characters factors
 
 source("./cleaning_scripts/class_converter.R")
 
+## Step 8
+## KAP yes/no conversions 
+
+## Here's where we categorize each KAP response as sufficient, positive, or good
+# and then set cutoff criteria for overall sufficient, positive, and good
+source("./cleaning_scripts/kap_coder.R")
+
+
+
 ## this step writes the data.frame to a csv file
 
-write.csv(int_students_total, file = "./data/int_students_total.csv")
+write.csv(int_students_total, file = "C:/Users/user/King County Restaurant Inspections/int_student_survey_round3/data/int_students_total.csv")
+write.csv(int_students_total, file = "C:/Users/user/King County Restaurant Inspections/int_student_survey_round3/data/int_students_total.csv")
 
-
-
+library(xlsx)
+write.xlsx(int_students_total, file = "C:/Users/user/King County Restaurant Inspections/int_student_survey_round3/data/int_students_total.xlsx")
 
 
 

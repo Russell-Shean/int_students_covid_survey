@@ -173,6 +173,20 @@ int_students_total <-  int_students_total %>%
   mutate(across(everything() & !survey_time, ~replace(., . %in% nz_misspellings, "new zealand")))
 
 
+# and now we create catchal categories of top 5 + other
+
+countries <- int_students_total %>% 
+  count(country_origin, sort = TRUE) %>%
+  slice(1:5)
+
+
+int_students_total$country_origin2 <- ifelse(int_students_total$country_origin %in% countries$country_origin,
+                                             int_students_total$country_origin,
+                                             "other")
+
+
+
+rm(countries)
 
 # 3. Other race or ethnicity
 # here we're going to be pretty conservative about combining categories

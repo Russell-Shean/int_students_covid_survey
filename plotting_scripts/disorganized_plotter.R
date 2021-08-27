@@ -10,6 +10,19 @@ ggplot(data = int_students_total)+
   guides(fill=guide_legend(title="University"))
 
 
+int %>%
+  group_by(survey_time)%>%
+  ggplot()+
+  geom_bar(aes(x=survey_time,
+               fill=university2))+
+  theme_bw()+
+  ggtitle("Survey Responses by Day")+
+  xlab("Date of Response")+
+  ylab("Number of Responses")+ 
+  guides(fill=guide_legend(title="University"))
+
+
+
 plot2 <- int_students_total[int_students_total$survey_round=="round_3",] %>%
   filter(survey_time > "2021-06-01")%>%
 ggplot()+
