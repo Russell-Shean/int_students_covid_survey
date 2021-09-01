@@ -1,7 +1,7 @@
 ## Data Cleaning script
 ## Basic descriptive analysis for International students survey
 ## Author = Russ
-## last update: "2021-08-26 13:34:51 CST"
+## last update: "2021-09-01 15:28:01 CST"
 ## Sys.time()
 
 ##################################################################
@@ -11,6 +11,7 @@
 # It sources other script files that do the actual work
 
 #IMPORTANT: because of problems with computer encoding,  this script only works for me when I set my system language to english
+
 # (windows doesn't really standardize encoding especially for foreign languages and I think there may be Chinese apostrophes in some of the variable names)
 # if you are using a mac or linux this will probably be less of a problem
 # changing the encoding for the csv files and these scripts may fix the problem, but just changing the system language may be easier lol 

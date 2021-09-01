@@ -1,12 +1,13 @@
 # Kap coder
 
-# Here's a function that we'll use to diachatomize each knowledge, attitude and practice response as correct/incorrect
-# Knowledge: suffecient/insufficient, attitude: positive/not positive, practice: good/bad
+# Here's a function that we'll use to dichotomize each knowledge, attitude and practice response as correct/incorrect
+# Knowledge: sufficient/insufficient, attitude: positive/not positive, practice: good/bad
 # this function also sums the total of scores for each participant
-# and then dichotomizes into all right/ some to all wrong
+# and then dichotomize into all right/ some to all wrong
 
 
-kap_coder <- function(df,start_var, end_var, label= "knowledge",match_vector){
+#this function works if you use all the questions
+kap_coder <- function(df,start_var=NULL, end_var=NULL, vars_vec=NULL, label= "knowledge",match_vector){
   
 
   
@@ -20,10 +21,14 @@ kap_coder <- function(df,start_var, end_var, label= "knowledge",match_vector){
   # this creates a column label for dichotomized KAP scores
   label3 <- paste(label,"present",sep="_")
   
-  
   #this selects the variables we're looking at
+  if(is.null(vars_vec)){
+    #this selects using start and end columns
   df_temp <- df %>% dplyr::select(.,{{start_var}}:{{end_var}}) 
-  
+  } else{
+    #this selects all in a vector of variables
+    df_temp <- df[,vars_vec]
+  }
   
   #new labels for the new columns
   labels4 <- paste(colnames(df_temp),"yesno",sep = "_")
@@ -65,30 +70,41 @@ df <- cbind(df,df_temp)
 df
 }  
 
+#This uses the function to select all the variables in the range or vector 
+#and then code and sum them
 
 
-#and now we apply the function
-
-## Knowledge
+##Knowledge
 int_students_total <- kap_coder(int_students_total, 
                                 start_var = "opn_feverless_transm",
                                 end_var = "opn_elderly_hrisk",
                                 match_vector = c("disagree","disagree", rep("agree",times=5)))
+  
 
 ## attitudes
 int_students_total <- kap_coder(int_students_total, 
                                 start_var = "opn_socialdist_protectme",
-                                end_var = "opn_covdcontrol_oneyear", 
+                                end_var = "opn_vacc_onlyend", 
                                 label = "attitude",
                                 match_vector = c("agree"))
 
 
 ## practice
 int_students_total <- kap_coder(int_students_total, 
-                                start_var = "hist_socialdist",
-                                end_var = "hist_followregs_twgvt", 
-                                label = "practice",
-                                match_vector = c(rep("often",times=4),rep("seldom",times=3),rep("often",times=5)))
+                                 vars_vec <- c("hist_socialdist",
+                                               "hist_handsoap",
+                                               "hist_notouch",
+                                               "hist_carrysanitzr",
+                       #not included           "hist_pubareas",
+                                               "hist_nomasktalking",
+                       #not included           "hist_resusemask",
+                                               "hist_wearmask",
+                                               "hist_nodoctors",
+                       #not included           "hist_usesocialmedia",
+                                               "hist_followrules_school",
+                                               "hist_followregs_twgvt"),
+                                 label = "practice",
+                                 match_vector = c(rep("often",times=4),rep("seldom",times=1),rep("often",times=4)))
 
 
   
