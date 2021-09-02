@@ -91,7 +91,7 @@ int_students_total <- kap_coder(int_students_total,
 
 ## practice
 int_students_total <- kap_coder(int_students_total, 
-                                 vars_vec <- c("hist_socialdist",
+                                 vars_vec = c("hist_socialdist",
                                                "hist_handsoap",
                                                "hist_notouch",
                                                "hist_carrysanitzr",
