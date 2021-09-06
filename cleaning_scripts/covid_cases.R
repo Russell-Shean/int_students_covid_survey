@@ -130,7 +130,8 @@ df <- cbind(df, previous_14days)
 
 covid_cases_total <- prevalator(covid_cases_total)
 
+int_students_total$survey_date <- date(int_students_total$survey_time)
 
-
+balls <- left_join(int_students_total, covid_cases_total, by =c("survey_date"="assigned_onset_date"))
   
  
