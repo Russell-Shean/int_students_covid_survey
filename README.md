@@ -30,5 +30,5 @@ This is the order in which the data_cleaning_master_script file calls and execut
 - github可以🔗到Rstudio
 
 
-# Responses by date and school    
+# Responses by date, school and initial survey   
 <img src="https://github.com/Russell-Shean/int_students_covid_survey/raw/main/figures/responseplot1.jpeg"/>
