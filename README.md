@@ -8,6 +8,19 @@ R code for data cleaning and analysis of an survey of COVID-19 related health be
 - I can add SSPS syntax code to a separate folder
 - If you create a github account, I can make you a collaborator which would allow you to make changes to files and also to set the repository to private so that we can share data
 
+# Order of execution
+
+Within the data_cleaning_master_script file, the following lines of code call and execute other script files:            
+
+**source("./cleaning_scripts/variable_namer.R")** will call and execute <a href="https://github.com/Russell-Shean/int_students_covid_survey/blob/main/cleaning_scripts/variable_namer.R">this</a> file.           
+**source("./cleaning_scripts/survey_round_merger.R")** will call and execute <a href="https://github.com/Russell-Shean/int_students_covid_survey/blob/main/cleaning_scripts/survey_round_merger.R">this</a> file.            
+**source("./cleaning_scripts/variable_merger.R")** will call and execute <a href="https://github.com/Russell-Shean/int_students_covid_survey/blob/main/cleaning_scripts/variable_merger.R">this</a> file.                
+**source("./cleaning_scripts/variable_separator.R")** will call and execute <a href="https://github.com/Russell-Shean/int_students_covid_survey/blob/main/cleaning_scripts/variable_separator.R">this</a> file.               
+**source("./cleaning_scripts/repeat_email_finder.R")** will call and execute <a href="https://github.com/Russell-Shean/int_students_covid_survey/blob/main/cleaning_scripts/repeat_email_finder.R">this</a> file.               
+**source("./cleaning_scripts/class_converter.R")** will call and execute <a href="https://github.com/Russell-Shean/int_students_covid_survey/blob/main/cleaning_scripts/class_converter.R">this</a> file.               
+**source("./cleaning_scripts/kap_coder.R")** will call and execute <a href="https://github.com/Russell-Shean/int_students_covid_survey/blob/main/cleaning_scripts/kap_coder.R">this</a>  file.                 
+
+
 # 中文説明
 - 因爲電腦（尤其是windows)遇到中文的時候常常會發生一些編輯(encoding)的問題，所以我習慣了盡量用英文寫程式碼。 如果有什麽不清楚的地方隨時可以問
 - 如果想快速地了解這些分析，可以先參考**cleaning_scripts**資料夾中的**data_cleaning_master_script.R**檔案， 它會以source()叫很多其他的scripts跑分析的程式碼
@@ -19,6 +32,6 @@ R code for data cleaning and analysis of an survey of COVID-19 related health be
 
 
 
-# figures and results
+# Responses by date and school
 - 目前還在分析中，待會加更多内容         
 <img src="https://github.com/Russell-Shean/int_students_covid_survey/raw/main/figures/responseplot1.jpeg"/>
