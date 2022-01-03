@@ -6,11 +6,11 @@ R code for data cleaning and analysis of an survey of COVID-19 related health be
 - The best file to look at to see how I've combined values is the **variable_merger.R** file that's also in the **cleaning_scripts** folder
 - This github website is where I'll put any updates and changes to the code
 - I can add SSPS syntax code to a separate folder
-- If you create a github account, I can make you a collaborator which would allow you to make changes to files and also to set the repository to private so that we can share data
+
 
 # Order of execution
 
-Within the data_cleaning_master_script file, the following lines of code call and execute other script files:            
+This is the order in which the data_cleaning_master_script file calls and executes other script files:            
 
 **source("./cleaning_scripts/variable_namer.R")** will call and execute <a href="https://github.com/Russell-Shean/int_students_covid_survey/blob/main/cleaning_scripts/variable_namer.R">this</a> file.           
 **source("./cleaning_scripts/survey_round_merger.R")** will call and execute <a href="https://github.com/Russell-Shean/int_students_covid_survey/blob/main/cleaning_scripts/survey_round_merger.R">this</a> file.            
@@ -30,8 +30,5 @@ Within the data_cleaning_master_script file, the following lines of code call an
 - github可以🔗到Rstudio
 
 
-
-
-# Responses by date and school
-- 目前還在分析中，待會加更多内容         
+# Responses by date and school    
 <img src="https://github.com/Russell-Shean/int_students_covid_survey/raw/main/figures/responseplot1.jpeg"/>
